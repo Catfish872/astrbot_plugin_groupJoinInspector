@@ -84,6 +84,30 @@
     "hint": "无法获取等级时填写到拒绝原因中。",
     "default": "暂时无法确认QQ等级，请打开个人资料中的QQ等级显示后重新申请"
   },
+  "threat_name_keywords": {
+    "type": "list",
+    "title": "名称威胁情报关键词",
+    "description": "名称威胁情报关键词",
+    "hint": "申请人昵称包含任一关键词时拒绝。拒绝原因请保持泛化，不要写出关键词或风险特征。",
+    "items": {
+      "type": "string"
+    },
+    "default": [
+      "頟"
+    ]
+  },
+  "threat_name_case_sensitive": {
+    "type": "bool",
+    "description": "名称关键词大小写敏感",
+    "hint": "开启后按原文匹配；关闭后英文大小写不敏感，中文关键词不受影响。",
+    "default": true
+  },
+  "threat_name_reject_reason": {
+    "type": "string",
+    "description": "名称关键词拒绝原因",
+    "hint": "填写到 QQ 群申请拒绝原因中。不要暴露命中的关键词、风险特征或威胁情报来源。",
+    "default": "请换大号加群"
+  },
   "auto_approve_passed": {
     "type": "bool",
     "description": "合格申请自动通过",
@@ -101,5 +125,83 @@
     "description": "重复申请事件去重秒数",
     "hint": "同一群、同一用户、同一flag在该时间内只处理一次。",
     "default": 10
+  },
+  "post_join_verification_enabled": {
+    "type": "bool",
+    "description": "启用入群后低可信兜底验证",
+    "hint": "只对 approval_rules 中配置过审批答案的群生效。所有可信放行规则都不满足时，入群后发送算术验证。",
+    "default": true
+  },
+  "post_join_verification_timeout_seconds": {
+    "type": "int",
+    "description": "入群后算术验证超时时间（秒）",
+    "hint": "用户需要在该时间内直接在群内发送计算结果；超时未答对则踢出，不拉黑。默认 120 秒。",
+    "default": 120
+  },
+  "post_join_profile_min_effective_items": {
+    "type": "int",
+    "description": "资料有效条目放行阈值",
+    "hint": "个人资料有效条目数达到该值时视为可信并免验证。默认 2。",
+    "default": 2
+  },
+  "post_join_qzone_access_enabled": {
+    "type": "bool",
+    "description": "启用 QQ 空间可访问放行规则",
+    "hint": "QQ 空间接口 code=0 且 subcode=0 时视为可访问，不要求有说说。需要 aiohttp。",
+    "default": true
+  },
+  "post_join_qzone_timeout_seconds": {
+    "type": "int",
+    "description": "QQ 空间检查超时时间（秒）",
+    "hint": "入群后检查目标 QQ 空间接口的请求超时时间。默认 8 秒。",
+    "default": 8
+  },
+  "post_join_vip_trust_enabled": {
+    "type": "bool",
+    "description": "启用 VIP 放行规则",
+    "hint": "开通任意形式 VIP 或 vip_level 大于 0 时视为可信并免验证。",
+    "default": true
+  },
+  "post_join_qq_level_trust_enabled": {
+    "type": "bool",
+    "description": "启用高 QQ 等级放行规则",
+    "hint": "QQ 等级达到配置阈值时视为高质量号并免验证。",
+    "default": true
+  },
+  "post_join_qq_level_min": {
+    "type": "int",
+    "description": "高 QQ 等级放行阈值",
+    "hint": "默认 30 级。该规则是放行权，不影响申请阶段的低等级拒绝阈值。",
+    "default": 30
+  },
+  "post_join_account_age_trust_enabled": {
+    "type": "bool",
+    "description": "启用账号年龄放行规则",
+    "hint": "get_stranger_info 返回的 reg_time 距今达到配置天数时视为可信并免验证。",
+    "default": true
+  },
+  "post_join_account_min_days": {
+    "type": "int",
+    "description": "账号年龄放行天数",
+    "hint": "默认 1825 天，约 5 年。",
+    "default": 1825
+  },
+  "post_join_verification_prompt_template": {
+    "type": "string",
+    "description": "入群后算术验证提示语",
+    "hint": "支持 {at_user}、{user_id}、{group_id}、{timeout}、{question}。不要暴露风控原因。",
+    "default": "{at_user} 为确认是真人，请在 {timeout} 秒内直接发送计算结果：{question} = ?"
+  },
+  "post_join_verification_success_template": {
+    "type": "string",
+    "description": "入群后验证通过提示语",
+    "hint": "支持 {at_user}、{user_id}、{group_id}。",
+    "default": "{at_user} 验证通过，欢迎加入。"
+  },
+  "post_join_verification_kick_template": {
+    "type": "string",
+    "description": "入群后验证超时踢出提示语",
+    "hint": "支持 {at_user}、{user_id}、{group_id}。不要暴露风控原因。",
+    "default": "{user_id} 未在规定时间内完成验证，已移出群聊。"
   }
 }
