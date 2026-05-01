@@ -1,0 +1,9 @@
+name: astrbot_plugin_groupJoinInspector
+display_name: 群入群申请检查器
+desc: 基于 NapCat/aiocqhttp 的群申请答案与 QQ 等级审批检查插件，支持按群配置答案、低等级拒绝和0级拒绝原因。
+version: v1.0.0
+author: 天各一方
+repo: https://github.com/Catfish872/astrbot_plugin_groupJoinInspector
+support_platforms:
+  - aiocqhttp
+astrbot_version: ">=3"
